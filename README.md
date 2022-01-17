@@ -1,2 +1,2 @@
 # popup-overlay-menu
-landing page example
+Landing page example. Used samples from Brad Traversy's tutorials.
