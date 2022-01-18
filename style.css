@@ -1,0 +1,220 @@
+/* CORE STYLES. Below are the css variables */
+:root {
+  --primary-color: rgba(13, 110, 139, 0.75); /* using "rgba" gives you opacity for your colors */
+  --overlay-color: rgba(24, 39, 51 , 0.85); /* The color for the popup Menu */
+  --menu-speed: 0.75s;
+}
+
+* {
+  margin: 0; /* CORE STYLES - adding a reset */
+  padding: 0;
+  box-sizing: border-box; /* Almost always set styling to border box */
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.4;
+}
+
+.container {
+  max-width: 960px;
+  margin: auto; /* this moves everything to the center */
+  overflow: hidden;
+  padding: 0 3rem; /* this is for the padding on the side */
+}
+
+.showcase {
+  background: var(--primary-color);
+  color: #fff;
+  height: 100vh; /* this will make the "showcase" take up the whole screen/viewport */
+  position: relative; /* the overlay (below) will be "absolute", so this is "relative" */
+}
+
+.showcase:before {
+  content: '';
+  background: url('https://images.pexels.com/photos/533923/pexels-photo-533923.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center center/cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* so covers whole page */
+  height: 100%;  /* so covers whole page */
+  z-index: -1;  /* Pushes the color down one layer. can now see the text over the image. */
+}
+
+.showcase .showcase-inner {
+  display: flex;  /* using flexbox*/
+  flex-direction: column;  /* have to do this or it displays as a "row" */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.showcase h1 {
+  font-size: 4rem;
+}
+h2 {
+    font-size: 1.8rem;
+  }
+
+.showcase p {
+  font-size: 1.3rem;
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  transition: opacity .2s ease-in-out;
+  text-decoration: none; /* Gets rid of the default "underlining" of text */
+}
+
+.btn:hover {
+  opacity: 0.5;
+}
+
+/* POPUP MENU STYLES */
+.menu-wrap {
+  position: fixed; /*This always keeps it at the top of the page*/
+  top: 0;
+  left: 0;
+  z-index: 1; /*This always keeps it at the top of the page*/
+}
+
+.menu-wrap .toggler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  opacity: 0; /* Makes the check box invisible */
+}
+
+.menu-wrap .hamburger {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 60px;
+  height: 60px;
+  padding: 1rem;
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hamburger Line - Middle */
+.menu-wrap .hamburger > div {
+  position: relative;
+  flex: none;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+/* Hamburger Lines - Top & Bottom */
+.menu-wrap .hamburger > div::before,
+.menu-wrap .hamburger > div::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  width: 100%;
+  height: 2px;
+  background: inherit;
+}
+
+/* Moves Bottom Line Down */
+.menu-wrap .hamburger > div::after {
+  top: 10px;
+}
+
+/* Toggler Animation - Using a "check box" element */
+.menu-wrap .toggler:checked + .hamburger > div {
+  transform: rotate(135deg); /*rotates the 3 hamburger Menu lines*/
+}
+
+/* Turns Lines Into X */
+.menu-wrap .toggler:checked + .hamburger > div:before,
+.menu-wrap .toggler:checked + .hamburger > div:after {
+  top: 0;
+  transform: rotate(90deg);
+}
+
+/* Rotate On Hover When in a "Checked" state. */
+.menu-wrap .toggler:checked:hover + .hamburger > div {
+  transform: rotate(225deg);
+}
+
+/* Show Menu */
+.menu-wrap .toggler:checked ~ .menu {
+  visibility: visible;
+}
+
+.menu-wrap .toggler:checked ~ .menu > div {
+  transform: scale(1);
+  transition-duration: var(--menu-speed);
+}
+
+.menu-wrap .toggler:checked ~ .menu > div > div {
+  opacity: 1;
+  transition:  opacity 0.4s ease 0.4s;
+}
+
+.menu-wrap .menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-wrap .menu > div {
+  background: var(--overlay-color);
+  border-radius: 50%;
+  width: 200vw;
+  height: 200vw;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+  transition: all 0.4s ease;
+}
+
+.menu-wrap .menu > div > div {
+  text-align: center;
+  max-width: 90vw;
+  max-height: 100vh;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.menu-wrap .menu > div > div > ul > li {
+  list-style: none;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
+.menu-wrap .menu > div > div > ul > li > a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.4s ease;
+}
+
